@@ -1,4 +1,5 @@
 import os.path
+import dirChanger
 from pytube import YouTube
 
 class Downloader:
@@ -19,10 +20,16 @@ class Downloader:
         try:
             if (file_type == 'mp4'):
                 video = stream.filter(progressive=True, file_extension=file_type);
-                video.get_highest_resolution().download(output_path= self.path, filename= (file_name + '.' + file_type));
+                try:
+                    video.get_highest_resolution().download(output_path= self.path, filename= (file_name + '.' + file_type));
+                except:
+                    video.get_highest_resolution().download(output_path= dirChanger.change(self.path), filename= (file_name + '.' + file_type));
             elif (file_type == 'mp3'):
                 audio = stream.filter(file_extension=file_type, only_audio=True, subtype='webm', abr='160kbps');
-                audio.first().download(output_path= self.path, filename= (file_name + '.' + file_type));
+                try:
+                    audio.first().download(output_path= self.path, filename= (file_name + '.' + file_type));
+                except:
+                    audio.first().download(output_path= dirChanger.change(self.path), filename= (file_name + '.' + file_type));
         except:
             print("Oops, some error occured while downloading.");
             return False;
