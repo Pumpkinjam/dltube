@@ -1,8 +1,6 @@
 import downloader as ydl
 
-dl = ydl.Downloader();
-
-
+download_dir = input("Input Download Directory (use '.' for default): ");
 
 tmp = int(input(
 """Select the file type:
@@ -12,6 +10,8 @@ tmp = int(input(
 ));
 
 ftype = 'mp4' if tmp == 1 else 'mp3';
+
+dl = ydl.Downloader(download_dir);
 
 while(True):
     link = input("Input youtube link (input 'quit' for exiting program): ");
